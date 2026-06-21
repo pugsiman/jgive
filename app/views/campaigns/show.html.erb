@@ -22,6 +22,7 @@
     <aside class="target-donation" aria-label="<%= t(".progress_aria") %>">
       <%= link_to t(".all_campaigns"), campaigns_path, class: "back-link" %>
       <h1><%= @campaign.title %></h1>
+      <p class="target-donor-count"><%= t(".donor_count", count: number_with_delimiter(@campaign.donors_count)) %></p>
       <p class="target-subtitle"><%= truncate(strip_tags(@campaign.story), length: 96) %></p>
 
       <div class="target-progress-card">
@@ -65,7 +66,7 @@
 
   <nav class="campaign-tabs" aria-label="<%= t(".tabs_aria") %>">
     <a href="#project-story" class="is-active"><%= t(".tab_project") %></a>
-    <a href="#donation-modal" data-action="donation-modal#open"><%= t(".tab_donate") %></a>
+    <a href="#recent-donations"><%= t(".tab_recent_donations") %></a>
     <a href="#updates"><%= t(".tab_updates") %></a>
   </nav>
 
@@ -75,6 +76,32 @@
       <h2><%= @campaign.title %></h2>
       <%= simple_format(@campaign.story) %>
     </article>
+
+    <section id="recent-donations" class="recent-donations-panel">
+      <p class="eyebrow"><%= t(".tab_recent_donations") %></p>
+      <h2><%= t(".recent_donations_heading") %></h2>
+
+      <% if @recent_donations.any? %>
+        <ol class="recent-donations-list">
+          <% @recent_donations.each do |donation| %>
+            <li>
+              <div class="recent-donation__avatar" aria-hidden="true">
+                <%= donor_display_name(donation).first %>
+              </div>
+              <div class="recent-donation__body">
+                <strong><%= donor_display_name(donation) %></strong>
+                <% if donation.dedication_message.present? %>
+                  <p><%= donation.dedication_message %></p>
+                <% end %>
+              </div>
+              <span><%= currency_from_cents(donation.amount_cents) %></span>
+            </li>
+          <% end %>
+        </ol>
+      <% else %>
+        <p class="empty-state"><%= t(".no_recent_donations") %></p>
+      <% end %>
+    </section>
   </section>
 
   <section

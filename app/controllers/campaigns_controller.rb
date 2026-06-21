@@ -5,6 +5,7 @@ class CampaignsController < ApplicationController
 
   def show
     @campaign = Campaign.with_attached_cover_image.find(params.expect(:id))
+    @recent_donations = @campaign.donations.order(created_at: :desc).limit(6)
     @donation = @campaign.donations.build
   end
 end
