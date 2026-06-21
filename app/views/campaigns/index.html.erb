@@ -1,0 +1,42 @@
+<% content_for :title, t(".title") %>
+
+<main class="page-shell">
+  <section class="campaigns-header">
+    <div>
+      <p class="eyebrow"><%= t(".eyebrow") %></p>
+      <h1><%= t(".heading") %></h1>
+    </div>
+  </section>
+
+  <section class="campaign-grid" aria-label="<%= t(".aria_label") %>">
+    <% @campaigns.each do |campaign| %>
+      <article class="campaign-card">
+        <%= link_to campaign_path(id: campaign), class: "campaign-card__media", aria: { label: campaign.title } do %>
+          <% if campaign.cover_image.attached? %>
+            <%= image_tag campaign.cover_image, alt: "" %>
+          <% else %>
+            <div class="cover-placeholder"></div>
+          <% end %>
+        <% end %>
+
+        <div class="campaign-card__body">
+          <h2><%= link_to campaign.title, campaign_path(id: campaign) %></h2>
+          <p><%= truncate(campaign.story, length: 140) %></p>
+
+          <div class="progress-meter" aria-label="<%= t("campaigns.show.funded_aria", progress: campaign.progress_percentage) %>">
+            <span style="width: <%= campaign.progress_percentage %>%"></span>
+          </div>
+
+          <div class="campaign-card__stats">
+            <strong><%= currency_from_cents(campaign.amount_raised_cents) %></strong>
+            <span><%= t("campaigns.show.raised_of", goal: currency_from_cents(campaign.goal_amount_cents)) %></span>
+          </div>
+        </div>
+      </article>
+    <% end %>
+
+    <% if @campaigns.empty? %>
+      <p class="empty-state"><%= t(".empty") %></p>
+    <% end %>
+  </section>
+</main>
