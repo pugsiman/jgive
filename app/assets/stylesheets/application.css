@@ -626,6 +626,18 @@ legend,
   max-width: 994px;
 }
 
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.is-active {
+  display: block;
+}
+
+.tab-panel[hidden] {
+  display: none;
+}
+
 .story-panel {
   font-size: 1.08rem;
   margin-bottom: 56px;

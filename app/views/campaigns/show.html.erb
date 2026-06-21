@@ -1,6 +1,6 @@
 <% content_for :title, @campaign.title %>
 
-<main class="campaign-page campaign-page--target" data-controller="donation-modal">
+<main class="campaign-page campaign-page--target" data-controller="donation-modal campaign-tabs">
   <section class="target-hero">
     <div class="target-media">
       <div class="target-media__frame">
@@ -64,20 +64,49 @@
     </aside>
   </section>
 
-  <nav class="campaign-tabs" aria-label="<%= t(".tabs_aria") %>">
-    <a href="#project-story" class="is-active"><%= t(".tab_project") %></a>
-    <a href="#recent-donations"><%= t(".tab_recent_donations") %></a>
-    <a href="#updates"><%= t(".tab_updates") %></a>
+  <nav class="campaign-tabs" aria-label="<%= t(".tabs_aria") %>" role="tablist">
+    <a
+      href="#project-story"
+      class="is-active"
+      role="tab"
+      aria-selected="true"
+      data-campaign-tabs-target="tab"
+      data-action="campaign-tabs#select"
+    ><%= t(".tab_project") %></a>
+    <a
+      href="#recent-donations"
+      role="tab"
+      aria-selected="false"
+      data-campaign-tabs-target="tab"
+      data-action="campaign-tabs#select"
+    ><%= t(".tab_recent_donations") %></a>
+    <a
+      href="#updates"
+      role="tab"
+      aria-selected="false"
+      data-campaign-tabs-target="tab"
+      data-action="campaign-tabs#select"
+    ><%= t(".tab_updates") %></a>
   </nav>
 
   <section class="target-content">
-    <article id="project-story" class="story-panel">
+    <article
+      id="project-story"
+      class="tab-panel story-panel is-active"
+      role="tabpanel"
+      data-campaign-tabs-target="panel"
+    >
       <p class="eyebrow"><%= t(".tab_project") %></p>
       <h2><%= @campaign.title %></h2>
       <%= simple_format(@campaign.story) %>
     </article>
 
-    <section id="recent-donations" class="recent-donations-panel">
+    <section
+      id="recent-donations"
+      class="tab-panel recent-donations-panel"
+      role="tabpanel"
+      data-campaign-tabs-target="panel"
+    >
       <p class="eyebrow"><%= t(".tab_recent_donations") %></p>
       <h2><%= t(".recent_donations_heading") %></h2>
 
@@ -101,6 +130,17 @@
       <% else %>
         <p class="empty-state"><%= t(".no_recent_donations") %></p>
       <% end %>
+    </section>
+
+    <section
+      id="updates"
+      class="tab-panel updates-panel"
+      role="tabpanel"
+      data-campaign-tabs-target="panel"
+    >
+      <p class="eyebrow"><%= t(".tab_updates") %></p>
+      <h2><%= t(".updates_heading") %></h2>
+      <p class="empty-state"><%= t(".no_updates") %></p>
     </section>
   </section>
 
