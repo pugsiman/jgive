@@ -8,16 +8,8 @@ class Campaign < ApplicationRecord
   validates :story, presence: true
   validates :goal_amount_cents, numericality: { greater_than: 0, only_integer: true }
 
-  def goal_amount
-    cents_to_decimal(goal_amount_cents)
-  end
-
   def amount_raised_cents
     campaign_donation_stats.sum(:amount_cents)
-  end
-
-  def amount_raised
-    cents_to_decimal(amount_raised_cents)
   end
 
   def progress_percentage
@@ -28,11 +20,5 @@ class Campaign < ApplicationRecord
 
   def donors_count
     campaign_donation_stats.where("donations_count > 0").count
-  end
-
-  private
-
-  def cents_to_decimal(cents)
-    cents.to_d / 100
   end
 end
