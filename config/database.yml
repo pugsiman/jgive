@@ -17,18 +17,13 @@ test:
 
 production:
   primary:
-    <<: *default
     url: <%= ENV['DATABASE_URL'] %>
-    database: <%= ENV.fetch("POSTGRES_DB", "jgive_app_production") %>
   cache:
-    <<: *default
-    database: <%= ENV.fetch("POSTGRES_CACHE_DB", "jgive_app_production_cache") %>
+    url: <%= ENV["DATABASE_URL"] %>
     migrations_paths: db/cache_migrate
   queue:
-    <<: *default
-    database: <%= ENV.fetch("POSTGRES_QUEUE_DB", "jgive_app_production_queue") %>
+    url: <%= ENV["DATABASE_URL"] %>
     migrations_paths: db/queue_migrate
   cable:
-    <<: *default
-    database: <%= ENV.fetch("POSTGRES_CABLE_DB", "jgive_app_production_cable") %>
+    url: <%= ENV["DATABASE_URL"] %>
     migrations_paths: db/cable_migrate
