@@ -1,0 +1,202 @@
+<% content_for :title, @campaign.title %>
+
+<main class="campaign-page campaign-page--target" data-controller="donation-modal">
+  <section class="target-hero">
+    <div class="target-media">
+      <div class="target-media__frame">
+        <% if @campaign.cover_image.attached? %>
+          <%= image_tag @campaign.cover_image, alt: "" %>
+        <% else %>
+          <div class="cover-placeholder cover-placeholder--large">
+            <span><%= @campaign.title %></span>
+          </div>
+        <% end %>
+      </div>
+      <div class="target-media__dots" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <aside class="target-donation" aria-label="<%= t(".progress_aria") %>">
+      <%= link_to t(".all_campaigns"), campaigns_path, class: "back-link" %>
+      <h1><%= @campaign.title %></h1>
+      <p class="target-subtitle"><%= truncate(strip_tags(@campaign.story), length: 96) %></p>
+
+      <div class="target-progress-card">
+        <div class="target-progress-card__header">
+          <div>
+            <strong><%= currency_from_cents(@campaign.amount_raised_cents) %></strong>
+            <span><%= t(".raised") %></span>
+          </div>
+          <p><%= t(".funded_inline", progress: @campaign.progress_percentage) %></p>
+        </div>
+
+        <div class="jgive-progress" aria-label="<%= t(".funded_aria", progress: @campaign.progress_percentage) %>">
+          <span class="jgive-progress__raised" style="width: <%= @campaign.progress_percentage %>%"></span>
+          <span class="jgive-progress__goal"></span>
+        </div>
+
+        <dl class="target-stat-grid">
+          <div>
+            <dt><%= t(".goal") %></dt>
+            <dd><%= currency_from_cents(@campaign.goal_amount_cents) %></dd>
+          </div>
+          <div>
+            <dt><%= t(".donors") %></dt>
+            <dd><%= number_with_delimiter(@campaign.donors_count) %></dd>
+          </div>
+        </dl>
+      </div>
+
+      <a class="primary-button target-cta" href="#donation-modal" data-action="donation-modal#open"><%= t(".donation_heading") %></a>
+      <%= link_to t(".join_as_fundraiser"), "#", class: "secondary-button" %>
+
+      <div class="share-row" aria-label="<%= t(".share_aria") %>">
+        <span><%= t(".share_label") %></span>
+        <%= link_to "f", "#", aria: { label: "Facebook" } %>
+        <%= link_to "w", "#", aria: { label: "WhatsApp" } %>
+        <%= link_to "x", "#", aria: { label: "X" } %>
+        <%= link_to "↗", "#", aria: { label: t(".copy_link") } %>
+      </div>
+    </aside>
+  </section>
+
+  <nav class="campaign-tabs" aria-label="<%= t(".tabs_aria") %>">
+    <a href="#project-story" class="is-active"><%= t(".tab_project") %></a>
+    <a href="#donation-modal" data-action="donation-modal#open"><%= t(".tab_donate") %></a>
+    <a href="#updates"><%= t(".tab_updates") %></a>
+  </nav>
+
+  <section class="target-content">
+    <article id="project-story" class="story-panel">
+      <p class="eyebrow"><%= t(".tab_project") %></p>
+      <h2><%= @campaign.title %></h2>
+      <%= simple_format(@campaign.story) %>
+    </article>
+  </section>
+
+  <section
+    id="donation-modal"
+    class="donation-modal <%= "donation-modal--open" if @donation.errors.any? %>"
+    aria-label="<%= t(".donation_aria") %>"
+    data-donation-modal-target="modal"
+  >
+    <a href="#" class="donation-modal__backdrop" aria-label="<%= t(".close") %>" data-action="donation-modal#close"></a>
+
+    <section class="donation-panel" role="dialog" aria-modal="true" aria-labelledby="donation-modal-title">
+      <div class="donation-panel__chrome">
+        <a href="#" aria-label="<%= t(".close") %>" data-action="donation-modal#close">×</a>
+        <strong><%= t(".secure_payment") %></strong>
+      </div>
+
+      <div class="donation-panel__title">
+        <span aria-hidden="true">♧</span>
+        <h2 id="donation-modal-title"><%= t(".donation_details") %></h2>
+      </div>
+
+      <% if @donation.errors.any? %>
+        <div class="form-errors" role="alert">
+          <p><%= t(".form_errors") %></p>
+          <ul>
+            <% @donation.errors.each do |error| %>
+              <li><%= error.message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <%= form_with model: @donation, url: campaign_donations_path(campaign_id: @campaign), class: "donation-form" do |form| %>
+        <div class="donation-form__topline">
+          <fieldset class="donation-type">
+            <legend><%= t(".frequency") %></legend>
+            <label>
+              <%= form.radio_button :giving_frequency, "one_time", checked: true %>
+              <span><%= t(".one_time") %></span>
+            </label>
+            <label>
+              <%= form.radio_button :giving_frequency, "recurring" %>
+              <span><%= t(".recurring") %></span>
+            </label>
+          </fieldset>
+
+          <label class="currency-select">
+            <span><%= t(".currency") %></span>
+            <select aria-label="<%= t(".currency") %>">
+              <option>ILS</option>
+            </select>
+          </label>
+        </div>
+
+        <fieldset class="amount-picker">
+          <legend><%= t(".amount") %></legend>
+          <div class="amount-card-grid">
+            <% Donation::PRESET_AMOUNTS.each do |amount| %>
+              <label>
+                <%= form.radio_button :preset_amount, amount %>
+                <span>
+                  <strong><%= number_to_currency(amount, unit: "₪", format: "%n %u", precision: 0) %></strong>
+                  <small><%= t(".preset_amount_label") %></small>
+                </span>
+              </label>
+            <% end %>
+
+            <label>
+              <%= form.radio_button :preset_amount, "", class: "custom-amount-radio" %>
+              <span>
+                <strong><%= t(".custom_amount") %></strong>
+              </span>
+            </label>
+          </div>
+
+          <%= form.number_field :custom_amount, min: 1, step: 1, inputmode: "decimal", placeholder: t(".custom_amount_placeholder"), class: "custom-amount-input" %>
+        </fieldset>
+
+        <label class="note-check">
+          <input type="checkbox">
+          <span><%= t(".add_note") %></span>
+        </label>
+
+        <label class="field">
+          <span><%= t(".email") %></span>
+          <%= form.email_field :user_email, required: true, autocomplete: "email" %>
+        </label>
+
+        <div class="name-fields" data-donation-modal-target="nameFields" <%= "hidden" if @donation.anonymous? %>>
+          <label class="field">
+            <span><%= t(".first_name") %></span>
+            <%= form.text_field :donor_first_name, autocomplete: "given-name", disabled: @donation.anonymous? %>
+          </label>
+
+          <label class="field">
+            <span><%= t(".last_name") %></span>
+            <%= form.text_field :donor_last_name, autocomplete: "family-name", disabled: @donation.anonymous? %>
+          </label>
+        </div>
+
+        <label class="field">
+          <span><%= t(".display_preference") %></span>
+          <%= form.select :donor_display_preference, [
+            [ t(".full_name"), "full_name" ],
+            [ t(".first_name_only"), "first_name_only" ],
+            [ t(".anonymous"), "anonymous" ]
+          ], {}, data: { donation_modal_target: "displayPreference", action: "donation-modal#syncNameFields" } %>
+        </label>
+
+        <label class="field">
+          <span><%= t(".dedication_message") %></span>
+          <%= form.text_area :dedication_message, rows: 4 %>
+        </label>
+
+        <div class="donation-submit-bar">
+          <div>
+            <span><%= t(".total_amount") %></span>
+            <strong><%= currency_from_cents(0) %></strong>
+          </div>
+          <%= form.submit t(".continue"), class: "primary-button" %>
+        </div>
+      <% end %>
+    </section>
+  </section>
+</main>
