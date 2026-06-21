@@ -1,0 +1,91 @@
+he:
+  app:
+    name: "Jgive"
+  activerecord:
+    attributes:
+      donation:
+        donor_first_name: "שם פרטי"
+        donor_last_name: "שם משפחה"
+        user_email: "אימייל"
+        amount_cents: "סכום התרומה"
+        donor_display_preference: "העדפת תצוגה"
+        dedication_message: "הקדשה"
+        giving_frequency: "תדירות"
+    errors:
+      models:
+        donation:
+          attributes:
+            donor_first_name:
+              blank: "יש להזין שם פרטי"
+            donor_last_name:
+              blank: "יש להזין שם משפחה"
+            user_email:
+              blank: "יש להזין אימייל"
+              invalid: "יש להזין אימייל תקין"
+            amount_cents:
+              blank: "יש לבחור סכום תרומה"
+              not_a_number: "יש לבחור סכום תרומה"
+              greater_than: "סכום התרומה חייב להיות גדול מ-0"
+  navigation:
+    primary: "ניווט ראשי"
+    solutions: "פתרונות"
+    products: "מוצרים"
+    about: "עלינו"
+    support: "תמיכה"
+    donate: "לתרומה"
+    login: "התחברות"
+  campaigns:
+    index:
+      title: "קמפיינים"
+      eyebrow: "קמפיינים פעילים"
+      heading: "קמפיינים לתרומה"
+      aria_label: "קמפיינים"
+      empty: "עדיין לא נוצרו קמפיינים."
+    show:
+      all_campaigns: "כל הקמפיינים"
+      progress_aria: "התקדמות הקמפיין"
+      raised_of: "גויסו מתוך %{goal}"
+      raised: "גויסו"
+      goal: "יעד"
+      funded: "מומן"
+      funded_inline: "%{progress}% גויסו"
+      funded_aria: "%{progress}% מומן"
+      paid_donors: "תורמים ששילמו"
+      donors: "תורמים"
+      join_as_fundraiser: "הצטרפו כשגרירים לקמפיין"
+      share_aria: "שיתוף קמפיין"
+      share_label: "תרומה מוכרת לזיכוי מס"
+      copy_link: "העתקת קישור"
+      close: "סגירה"
+      tabs_aria: "חלקי הקמפיין"
+      tab_project: "על הפרויקט"
+      tab_donate: "תרומה"
+      tab_updates: "עדכונים"
+      donation_aria: "ביצוע תרומה"
+      donation_heading: "ביצוע תרומה"
+      secure_payment: "תשלום מאובטח"
+      donation_details: "פרטי התרומה שלי"
+      form_errors: "אנא בדקו את השדות המסומנים."
+      amount: "סכום"
+      custom_amount: "סכום אחר"
+      custom_amount_placeholder: "הזינו סכום"
+      preset_amount_label: "תרומה מומלצת"
+      frequency: "תדירות"
+      currency: "מטבע"
+      one_time: "חד פעמי"
+      recurring: "חוזרת"
+      add_note: "רוצה להוסיף הערה?"
+      email: "אימייל"
+      first_name: "שם פרטי"
+      last_name: "שם משפחה"
+      display_preference: "העדפת תצוגה"
+      full_name: "שם מלא"
+      first_name_only: "שם פרטי בלבד"
+      anonymous: "אנונימי"
+      dedication_message: "הקדשה"
+      total_amount: "סכום התרומה שלך"
+      continue: "המשך"
+      submit: "שמירת תרומה"
+  donations:
+    create:
+      pledge_recorded: "התחייבות התרומה נשמרה."
