@@ -4,6 +4,8 @@ FactoryBot.define do
     preset_amount { "50" }
     giving_frequency { "one_time" }
     donor_display_preference { "anonymous" }
+    donor_first_name { "Donor" }
+    donor_last_name { "Example" }
     sequence(:user_email) { |number| "donor#{number}@example.com" }
 
     trait :paid do
