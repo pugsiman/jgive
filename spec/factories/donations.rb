@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :donation do
     campaign
-    preset_amount { "50" }
+    amount_cents { 5_000 }
     giving_frequency { "one_time" }
     donor_display_preference { "anonymous" }
     donor_first_name { "Donor" }
