@@ -9,6 +9,7 @@ class DonationsController < ApplicationController
     donor_last_name
     user_email
   ].freeze
+
   AMOUNT_PARAMS = %w[preset_amount custom_amount].freeze
 
   def create
