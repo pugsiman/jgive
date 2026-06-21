@@ -65,6 +65,8 @@ en:
       recent_donations_heading: "Recent donations"
       no_recent_donations: "No donations have been recorded yet."
       anonymous_donor: "Anonymous"
+      updates_heading: "Updates"
+      no_updates: "No updates have been posted yet."
       donation_aria: "Make a donation"
       donation_heading: "Make a donation"
       secure_payment: "Secure payment"

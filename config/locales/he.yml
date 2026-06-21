@@ -65,6 +65,8 @@ he:
       recent_donations_heading: "תרומות אחרונות"
       no_recent_donations: "עדיין לא נרשמו תרומות."
       anonymous_donor: "אנונימי"
+      updates_heading: "עדכונים"
+      no_updates: "עדיין לא פורסמו עדכונים."
       donation_aria: "ביצוע תרומה"
       donation_heading: "ביצוע תרומה"
       secure_payment: "תשלום מאובטח"
