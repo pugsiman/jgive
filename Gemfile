@@ -18,9 +18,9 @@ gem "stimulus-rails"
 gem "jbuilder"
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
+gem "solid_cable"
 gem "solid_cache"
 gem "solid_queue"
-gem "solid_cable"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -35,13 +35,15 @@ gem "thruster", require: false
 # gem "image_processing", "~> 1.2"
 
 group :development, :test do
+  gem "brakeman", require: false
   gem "dotenv"
   gem "factory_bot_rails"
   gem "pry-byebug"
   gem "rspec-rails"
+  gem "rubocop", require: false
+  gem "rubocop-rails", require: false
   gem "vcr"
   gem "webmock"
-  gem "brakeman", require: false
 end
 
 group :development do

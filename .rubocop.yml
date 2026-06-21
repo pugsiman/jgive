@@ -1,8 +1,57 @@
-# Omakase Ruby styling for Rails
-inherit_gem: { rubocop-rails-omakase: rubocop.yml }
+plugins:
+  - rubocop-rails
 
-# Overwrite or add rules to create your own house style
-#
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
+AllCops:
+  CacheRootDirectory: tmp/rubocop_cache
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.3
+  TargetRailsVersion: 8.0
+  Exclude:
+    - "bin/*"
+    - "db/schema.rb"
+    - "db/cache_schema.rb"
+    - "db/cable_schema.rb"
+    - "db/queue_schema.rb"
+    - "db/migrate/*_create_active_storage_tables.active_storage.rb"
+    - "log/**/*"
+    - "storage/**/*"
+    - "tmp/**/*"
+    - "vendor/**/*"
+
+Layout/LineLength:
+  Max: 120
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/BlockComments:
+  Exclude:
+    - "spec/spec_helper.rb"
+
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"
+    - "db/migrate/**/*"
+
+Metrics/AbcSize:
+  Exclude:
+    - "db/migrate/**/*"
+
+Metrics/MethodLength:
+  Exclude:
+    - "db/migrate/**/*"
+
+Rails/Output:
+  Exclude:
+    - "db/seeds.rb"
+
+Rails/SkipsModelValidations:
+  Exclude:
+    - "app/models/campaign_donation_stat.rb"
