@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_06_21_093400) do
+ActiveRecord::Schema[8.0].define(version: 2026_06_21_140120) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -78,6 +78,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_06_21_093400) do
     t.enum "state", default: "pending", null: false, enum_type: "donation_state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "donor_first_name"
+    t.string "donor_last_name"
     t.index "lower((user_email)::text)", name: "index_donations_on_lower_user_email"
     t.index ["campaign_id", "state"], name: "index_donations_on_campaign_id_and_state"
     t.index ["campaign_id", "user_email"], name: "index_donations_on_campaign_id_and_user_email"
