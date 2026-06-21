@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="<%= I18n.locale %>" dir="<%= I18n.locale == :he ? "rtl" : "ltr" %>">
   <head>
-    <title><%= content_for(:title) || "Jgive" %></title>
+    <title><%= content_for(:title) || t("app.name") %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -23,6 +23,35 @@
   </head>
 
   <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <%= link_to t("app.name"), root_path, class: "site-logo" %>
+
+        <nav class="site-nav" aria-label="<%= t("navigation.primary") %>">
+          <%= link_to t("navigation.solutions"), "#" %>
+          <%= link_to t("navigation.products"), "#" %>
+          <%= link_to t("navigation.about"), "#" %>
+          <%= link_to t("navigation.support"), "#" %>
+        </nav>
+
+        <div class="site-actions">
+          <%= link_to "HE", url_for(locale: :he), class: "locale-link" %>
+          <span aria-hidden="true">|</span>
+          <%= link_to "EN", url_for(locale: :en), class: "locale-link" %>
+          <%= link_to t("navigation.donate"), campaigns_path, class: "donate-pill" %>
+          <%= link_to t("navigation.login"), "#", class: "login-link" %>
+        </div>
+      </div>
+    </header>
+
+    <% if notice.present? %>
+      <div class="flash flash--notice"><%= notice %></div>
+    <% end %>
+
+    <% if alert.present? %>
+      <div class="flash flash--alert"><%= alert %></div>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>
