@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
-  root "campaigns#index"
+  scope "(:locale)", locale: /en|he/ do
+    root "campaigns#index"
 
-  resources :campaigns, only: %i[index show] do
-    resources :donations, only: :create
+    resources :campaigns, only: %i[index show] do
+      resources :donations, only: :create
+    end
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
